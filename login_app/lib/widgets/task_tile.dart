@@ -26,6 +26,7 @@ class TaskTile extends StatelessWidget {
       trailing: Checkbox(
         value: isChecked,
         activeColor: Colors.lightBlueAccent,
+
       onChanged: checkboxCallback,
       ),
     );

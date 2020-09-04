@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:async' show Future;
+
+import 'package:flutter/services.dart' show rootBundle;
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
@@ -94,9 +99,62 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
               ),
             ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Material(
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.circular(30.0),
+                elevation: 5.0,
+                child: MaterialButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context,'sidebar_menu');
+                  },
+                  minWidth: 200.0,
+                  height: 42.0,
+                  child: Text(
+                    'SideBar Menu',
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 16.0),
+              child: Material(
+                color: Colors.blueGrey,
+                borderRadius: BorderRadius.circular(30.0),
+                elevation: 5.0,
+                child: MaterialButton(
+                  onPressed: () {
+                    loadStudent();
+                  },
+                  minWidth: 200.0,
+                  height: 42.0,
+                  child: Text(
+                    'Load Json',
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
     );
   }
+
+  void loadStudent() async {
+    //await wait(5);
+    String jsonString = await _loadAsset();
+    final jsonResponse = json.decode(jsonString);
+    print(jsonResponse['instructors'][11]);
+  }
+
+  Future<String> _loadAsset() async {
+    return await rootBundle.loadString('assets/json/instructors.json');
+  }
+
+  Future wait(int seconds) {
+    return new Future.delayed(Duration(seconds: seconds), () => {});
+  }
+
+
 }
